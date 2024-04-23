@@ -1,6 +1,12 @@
 import '@testing-library/jest-dom/vitest';
 import ResizeObserver from 'resize-observer-polyfill';
+import { server } from './mocks/server';
+// -- msw --
+beforeAll(() => server.listen());
+afterEach(() => server.resetHandlers());
+afterAll(() => server.close());
 
+// -- for testing third party components --
 global.ResizeObserver = ResizeObserver;
 
 //window.PointerEvent = MockPointerEvent as any;
