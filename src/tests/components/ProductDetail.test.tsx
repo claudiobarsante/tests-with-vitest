@@ -1,16 +1,29 @@
 import { render, screen } from '@testing-library/react';
 import ProductDetail from '../../components/ProductDetail';
-import { products } from '../mocks/data';
 import { http, HttpResponse } from 'msw';
 import { server } from '../mocks/server';
+import { db } from '../mocks/db';
 
 describe('ProductDetail', () => {
-	it('should render the product detail', async () => {
-		render(<ProductDetail productId={1} />);
+	let productId: number;
 
-		expect(await screen.findByText(new RegExp(products[0].name))).toBeInTheDocument();
+	beforeAll(() => {
+		const product = db.product.create();
+		productId = product.id;
+	});
+
+	afterAll(() => {
+		db.product.delete({ where: { id: { equals: productId } } });
+	});
+
+	it('should render the product details', async () => {
+		const product = db.product.findFirst({ where: { id: { equals: productId } } });
+
+		render(<ProductDetail productId={productId} />);
+
+		expect(await screen.findByText(new RegExp(product!.name))).toBeInTheDocument();
 		// -- can not pass number to a regular expression, so convert to string
-		expect(await screen.findByText(new RegExp(products[0].price.toString()))).toBeInTheDocument();
+		expect(await screen.findByText(new RegExp(product!.price.toString()))).toBeInTheDocument();
 	});
 
 	it('should render "The given product was not found" when the product is not found', async () => {
