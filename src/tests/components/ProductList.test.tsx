@@ -3,8 +3,21 @@ import ProductList from '../../components/ProductList';
 import { http, HttpResponse } from 'msw';
 
 import { server } from './../mocks/server';
+import { db } from '../mocks/db';
 
 describe('ProductList', () => {
+	const productsIds: number[] = []; // -- have to keep track of the ids of the created products, to delete them after the tests finishes
+	beforeAll(() => {
+		[1, 2, 3].forEach(() => {
+			const product = db.product.create();
+			productsIds.push(product.id);
+		});
+	});
+	// -- delete the created products after the tests finishes
+	afterAll(() => {
+		db.product.deleteMany({ where: { id: { in: productsIds } } });
+	});
+
 	it('should render the list of products', async () => {
 		render(<ProductList />);
 
