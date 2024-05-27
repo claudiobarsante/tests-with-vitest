@@ -130,14 +130,7 @@ describe('BrowseProductsPage', () => {
 });
 
 const renderComponent = () => {
-	render(
-		<CartProvider>
-			<Theme>
-				<BrowseProducts />
-			</Theme>
-		</CartProvider>,
-		{ wrapper: AllProviders }
-	);
+	render(<BrowseProducts />, { wrapper: AllProviders }); // -- wrapp it with all providers
 
 	const getCategoriesSkeleton = () =>
 		screen.queryByRole('progressbar', {
