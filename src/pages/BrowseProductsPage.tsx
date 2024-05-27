@@ -35,6 +35,7 @@ function BrowseProducts() {
 				const { data } = await axios.get<Category[]>('/categories');
 				setCategories(data);
 			} catch (error) {
+				console.log('Error', error);
 				if (error instanceof AxiosError) setErrorCategories(error.message);
 				else setErrorCategories('An unexpected error occurred');
 			} finally {

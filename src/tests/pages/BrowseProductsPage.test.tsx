@@ -72,4 +72,11 @@ describe('BrowseProducts', () => {
 
 		expect(await screen.findByText(/error/i)).toBeInTheDocument();
 	});
+
+	// it('should render categories', async () => {
+	// 	renderComponent();
+
+	// 	const combobox = await screen.findByRole('combobox');
+	// 	expect(combobox).toBeInTheDocument();
+	// });
 });
