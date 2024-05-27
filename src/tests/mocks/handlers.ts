@@ -29,4 +29,4 @@ import { db } from './db';
 //*Easy way with @mswjs/data  */
 
 // -- automatically generates handlers for all your data
-export const handlers = [...db.product.toHandlers('rest')];
+export const handlers = [...db.product.toHandlers('rest'), ...db.category.toHandlers('rest')];
